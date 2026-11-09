@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-collectiq}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-collectiq}
+      POSTGRES_DB: ${POSTGRES_DB:-collectiq}
+    volumes:
+      - collectiq_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-collectiq} -d ${POSTGRES_DB:-collectiq}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-collectiq}:${POSTGRES_PASSWORD:-collectiq}@db:5432/${POSTGRES_DB:-collectiq}
+      FRONTEND_ORIGIN: http://localhost:5173
+    ports: ["8000:8000"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports: ["5173:5173"]
+    depends_on: [api]
+
+volumes:
+  collectiq_pg:

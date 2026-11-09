@@ -1,0 +1,7 @@
+loan_id,borrower_name,pincode,branch_name,outstanding,dpd,promise_date,payment_history,officer_email
+LN-10293,Company B (packaging unit),452001,Indore Central,640000,12,2026-11-05,regular,rahul@collectiq.demo
+LN-10871,Company C (fertiliser shop),452003,Indore Central,310000,27,,irregular,neha@collectiq.demo
+LN-11930,Company D (printing press),452002,Indore Central,220000,19,2026-10-31,missed,imran@collectiq.demo
+LN-12004,Shree Tools & Dies,452001,Indore Central,480000,8,,regular,
+LN-12019,Mahalaxmi Traders,452003,Indore Central,175000,23,,late,
+LN-12025,Om Packaging Works,452002,Indore Central,720000,29,,missed,
